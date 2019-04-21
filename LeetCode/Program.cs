@@ -5,9 +5,9 @@ using System.Linq;
 namespace LeetCode {
   internal class MainClass {
     public static void Main(string[] args) {
-      var s = "hello,world";
-      Console.Write(s);
-      Console.Write("hi");
+      int[,] theArray = { { 3, 0, 8, 4 }, { 2, 4, 5, 7 }, { 9, 2, 6, 3 }, { 0, 3, 1, 0 } };
+      int sum = MaxIncreaseKeepingSkyline(theArray);
+      Console.Write(sum);
       Console.ReadLine();
     }
 
@@ -58,5 +58,38 @@ namespace LeetCode {
       return new string(parenthesesCharArray.Where(x => x != '*').ToArray());
     }
 
+    // 807
+    public static int MaxIncreaseKeepingSkyline(int[,] grid) {
+      int row = grid.GetLength(0);
+      int col = grid.GetLength(1);
+      int[] row_Max = new int[row];
+      int[] col_Max = new int[col];
+      int[,] newArray = new int[row, col];
+      int sum = 0;
+
+      for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+          if (grid[i, j] >= col_Max[i]) {
+            col_Max[i] = grid[i, j];
+          }
+          if (grid[i, j] >= row_Max[j]) {
+            row_Max[j] = grid[i, j];
+          }
+        }
+      }
+
+      for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+          if (row_Max[i] <= col_Max[j]) {
+            newArray[i, j] = row_Max[i];
+            sum += newArray[i, j] - grid[i, j];
+          } else {
+            newArray[i, j] = col_Max[j];
+            sum += newArray[i, j] - grid[i, j];
+          }
+        }
+      }
+      return sum;
+    }
   }
 }
