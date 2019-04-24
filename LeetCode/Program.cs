@@ -5,9 +5,16 @@ using System.Linq;
 namespace LeetCode {
   internal class MainClass {
     public static void Main(string[] args) {
-      int[,] theArray = { { 3, 0, 8, 4 }, { 2, 4, 5, 7 }, { 9, 2, 6, 3 }, { 0, 3, 1, 0 } };
-      int sum = MaxIncreaseKeepingSkyline(theArray);
-      Console.Write(sum);
+      int[] root1 = new int[] { 10, 5, 15, 3, 7, 18 };
+      Node root = null;
+      root = BinaryTree.Insert(root, 10);
+      root = BinaryTree.Insert(root, 5);
+      root = BinaryTree.Insert(root, 15);
+      root = BinaryTree.Insert(root, 3);
+      root = BinaryTree.Insert(root, 7);
+      root = BinaryTree.Insert(root, 18);
+
+      Console.Write(RangeSumBST(root, 7, 15));
       Console.ReadLine();
     }
 
@@ -90,6 +97,37 @@ namespace LeetCode {
         }
       }
       return sum;
+    }
+
+    //938
+    public static int RangeSumBST(Node root, int L, int R) {
+      var totalSum = 0;
+
+      var que = new Queue<Node>();
+      que.Enqueue(root);
+
+      while (que.Count() > 0) {
+        root = que.Dequeue();
+        if (root.data >= L && root.data <= R) {
+          totalSum += root.data;
+
+
+          if (root.left != null) {
+            que.Enqueue(root.left);
+          }
+          if (root.right != null) {
+            que.Enqueue(root.right);
+          }
+        } else if (root.data < L) {
+          if (root.right != null)
+            que.Enqueue(root.right);
+        } else if (root.data > R) {
+          if (root.left != null)
+            que.Enqueue(root.left);
+        }
+      }
+
+      return totalSum;
     }
   }
 }
