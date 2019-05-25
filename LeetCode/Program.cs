@@ -35,10 +35,22 @@ namespace LeetCode
                 var splittedUserName = shapedUserName[0];
                 var splitWithDot = splittedUserName.Split('.');
                 var finalUserName = String.Join("", splitWithDot);
-                hashset.Add(userName + "@" + domaiName);
+                hashset.Add(finalUserName + "@" + domaiName);
             }
             return hashset.Count;
         }
+        // 402. Remove K Digits
+        public class Solution
+        {
+            public string RemoveKdigits(string num, int k)
+            {
+                if(num.Length == 0)
+                {
+                    return "";
+                }
 
+                return "";
+            }
+        }
     }
 }
