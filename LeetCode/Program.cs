@@ -129,5 +129,42 @@ namespace LeetCode {
 
       return totalSum;
     }
+    
+        //this is just a test
+
+        public int NumUniqueEmails(string[] emails)
+        {
+            if (emails == null || emails.Length == 0)
+                return 0;
+
+            var hashset = new HashSet<string>();
+
+            foreach (var email in emails)
+            {
+                var splitedEmail = email.Split('@');
+                var domaiName = splitedEmail[1];
+                var userName = splitedEmail[0];
+                var shapedUserName = userName.Split('+');
+                var splittedUserName = shapedUserName[0];
+                var splitWithDot = splittedUserName.Split('.');
+                var finalUserName = String.Join("", splitWithDot);
+                hashset.Add(finalUserName + "@" + domaiName);
+            }
+            return hashset.Count;
+        }
+        // 402. Remove K Digits
+        public class Solution
+        {
+            public string RemoveKdigits(string num, int k)
+            {
+                if(num.Length == 0)
+                {
+                    return "";
+                }
+
+                return "";
+            }
+        }
+    }
   }
 }
