@@ -4,18 +4,24 @@ using System.Linq;
 
 namespace LeetCode {
   internal class MainClass {
+    
     public static void Main(string[] args) {
-      int[] root1 = new int[] { 10, 5, 15, 3, 7, 18 };
+      //int[] root1 = new int[] { 4, 1, 6, 0, 2, 5, 7, null, null, null, 3, null, null, null, 8 };
       Node root = null;
-      root = BinaryTree.Insert(root, 10);
-      root = BinaryTree.Insert(root, 5);
-      root = BinaryTree.Insert(root, 15);
-      root = BinaryTree.Insert(root, 3);
-      root = BinaryTree.Insert(root, 7);
-      root = BinaryTree.Insert(root, 18);
 
-      Console.Write(RangeSumBST(root, 7, 15));
+      root = BinaryTree.insert(root, 4);
+      root = BinaryTree.insert(root, 1);
+      root = BinaryTree.insert(root, 6);
+      root = BinaryTree.insert(root, 0);
+      root = BinaryTree.insert(root, 2);
+      root = BinaryTree.insert(root, 5);
+      root = BinaryTree.insert(root, 7);
+      root = BinaryTree.insert(root, 3);
+      root = BinaryTree.insert(root, 8);
+      
+      Console.Write(BstToGst(root));
       Console.ReadLine();
+
     }
 
     // problem 3
@@ -102,61 +108,36 @@ namespace LeetCode {
     //938
     public static int RangeSumBST(Node root, int L, int R) {
       var totalSum = 0;
+      Node current; 
 
       var que = new Queue<Node>();
       que.Enqueue(root);
 
       while (que.Count() > 0) {
-        root = que.Dequeue();
-        if (root.data >= L && root.data <= R) {
-          totalSum += root.data;
+        current = que.Dequeue();
+        if (current.data >= L && current.data <= R) {
+          totalSum += current.data;
 
-
-          if (root.left != null) {
-            que.Enqueue(root.left);
+          if (current.left != null) {
+            que.Enqueue(current.left);
           }
-          if (root.right != null) {
-            que.Enqueue(root.right);
+          if (current.right != null) {
+            que.Enqueue(current.right);
           }
-        } else if (root.data < L) {
-          if (root.right != null)
-            que.Enqueue(root.right);
-        } else if (root.data > R) {
-          if (root.left != null)
-            que.Enqueue(root.left);
+        } else if (current.data < L) {
+          if (current.right != null)
+            que.Enqueue(current.right);
+        } else if (current.data > R) {
+          if (current.left != null)
+            que.Enqueue(current.left);
         }
       }
 
       return totalSum;
     }
-    
-        //this is just a test
-
-        public int NumUniqueEmails(string[] emails)
-        {
-            if (emails == null || emails.Length == 0)
-                return 0;
-
-            var hashset = new HashSet<string>();
-
-            foreach (var email in emails)
-            {
-                var splitedEmail = email.Split('@');
-                var domaiName = splitedEmail[1];
-                var userName = splitedEmail[0];
-                var shapedUserName = userName.Split('+');
-                var splittedUserName = shapedUserName[0];
-                var splitWithDot = splittedUserName.Split('.');
-                var finalUserName = String.Join("", splitWithDot);
-                hashset.Add(finalUserName + "@" + domaiName);
-            }
-            return hashset.Count;
-        }
+        
         // 402. Remove K Digits
-        public class Solution
-        {
-            public string RemoveKdigits(string num, int k)
-            {
+    public string RemoveKdigits(string num, int k){
                 if(num.Length == 0)
                 {
                     return "";
@@ -164,7 +145,24 @@ namespace LeetCode {
 
                 return "";
             }
+
+        // 1038
+        private static int sum = 0;
+        public static Node BstToGst(Node root)
+        {
+            RightNodeLeft(root);
+            return root;
+        }
+        
+        private static void RightNodeLeft(Node root)
+        {
+
+            if (root == null) return;
+            RightNodeLeft(root.right);
+            sum = sum + root.data;
+            root.data = sum;
+            RightNodeLeft(root.left);
         }
     }
-  }
 }
+
