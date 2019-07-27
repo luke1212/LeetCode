@@ -6,22 +6,27 @@ namespace LeetCode {
   internal class MainClass {
     
     public static void Main(string[] args) {
-      //int[] root1 = new int[] { 4, 1, 6, 0, 2, 5, 7, null, null, null, 3, null, null, null, 8 };
-      Node root = null;
 
-      root = BinaryTree.insert(root, 4);
-      root = BinaryTree.insert(root, 1);
-      root = BinaryTree.insert(root, 6);
-      root = BinaryTree.insert(root, 0);
-      root = BinaryTree.insert(root, 2);
-      root = BinaryTree.insert(root, 5);
-      root = BinaryTree.insert(root, 7);
-      root = BinaryTree.insert(root, 3);
-      root = BinaryTree.insert(root, 8);
-      
-      Console.Write(BstToGst(root));
-      Console.ReadLine();
+      BinaryTree tree = new BinaryTree();
 
+      /* Assume that inorder traversal  
+         of following tree is given  
+          40  
+          / \  
+      10     30  
+      /         \  
+      5         28 */
+      int[] inorder = new int[] { 5, 10, 40, 30, 28 };
+      int len = inorder.Length;
+      Node mynode = tree.buildTree(inorder, 0,
+                                   len - 1, tree.root);
+
+      /* Let us test the built tree by  
+         printing Inorder traversal */
+      Console.WriteLine("Inorder traversal of " +
+                     "the constructed tree is ");
+      Console.Read();
+      tree.printInorder(mynode);
     }
 
     // problem 3
@@ -135,8 +140,9 @@ namespace LeetCode {
 
       return totalSum;
     }
-        
-        // 402. Remove K Digits
+  // 654 https://www.geeksforgeeks.org/construct-binary-tree-from-inorder-traversal/
+
+    // 402. Remove K Digits
     public string RemoveKdigits(string num, int k){
                 if(num.Length == 0)
                 {
