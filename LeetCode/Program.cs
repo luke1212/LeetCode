@@ -5,17 +5,26 @@ using System.Linq;
 namespace LeetCode {
   internal class MainClass {
     public static void Main(string[] args) {
-      int[] root1 = new int[] { 10, 5, 15, 3, 7, 18 };
-      Node root = null;
-      root = BinaryTree.Insert(root, 10);
-      root = BinaryTree.Insert(root, 5);
-      root = BinaryTree.Insert(root, 15);
-      root = BinaryTree.Insert(root, 3);
-      root = BinaryTree.Insert(root, 7);
-      root = BinaryTree.Insert(root, 18);
+      BinaryTree tree = new BinaryTree();
 
-      Console.Write(RangeSumBST(root, 7, 15));
-      Console.ReadLine();
+      /* Assume that inorder traversal  
+         of following tree is given  
+          40  
+          / \  
+      10     30  
+      /         \  
+      5         28 */
+      int[] inorder = new int[] { 5, 10, 40, 30, 28 };
+      int len = inorder.Length;
+      Node mynode = tree.buildTree(inorder, 0,
+                                   len - 1, tree.root);
+
+      /* Let us test the built tree by  
+         printing Inorder traversal */
+      Console.WriteLine("Inorder traversal of " +
+                     "the constructed tree is ");
+      Console.Read();
+      tree.printInorder(mynode);
     }
 
     // problem 3
@@ -129,5 +138,9 @@ namespace LeetCode {
 
       return totalSum;
     }
+
+    // 654 https://www.geeksforgeeks.org/construct-binary-tree-from-inorder-traversal/
+
+
   }
 }
