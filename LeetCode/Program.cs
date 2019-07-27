@@ -4,7 +4,9 @@ using System.Linq;
 
 namespace LeetCode {
   internal class MainClass {
+    
     public static void Main(string[] args) {
+
       BinaryTree tree = new BinaryTree();
 
       /* Assume that inorder traversal  
@@ -111,36 +113,62 @@ namespace LeetCode {
     //938
     public static int RangeSumBST(Node root, int L, int R) {
       var totalSum = 0;
+      Node current; 
 
       var que = new Queue<Node>();
       que.Enqueue(root);
 
       while (que.Count() > 0) {
-        root = que.Dequeue();
-        if (root.data >= L && root.data <= R) {
-          totalSum += root.data;
+        current = que.Dequeue();
+        if (current.data >= L && current.data <= R) {
+          totalSum += current.data;
 
-
-          if (root.left != null) {
-            que.Enqueue(root.left);
+          if (current.left != null) {
+            que.Enqueue(current.left);
           }
-          if (root.right != null) {
-            que.Enqueue(root.right);
+          if (current.right != null) {
+            que.Enqueue(current.right);
           }
-        } else if (root.data < L) {
-          if (root.right != null)
-            que.Enqueue(root.right);
-        } else if (root.data > R) {
-          if (root.left != null)
-            que.Enqueue(root.left);
+        } else if (current.data < L) {
+          if (current.right != null)
+            que.Enqueue(current.right);
+        } else if (current.data > R) {
+          if (current.left != null)
+            que.Enqueue(current.left);
         }
       }
 
       return totalSum;
     }
+  // 654 https://www.geeksforgeeks.org/construct-binary-tree-from-inorder-traversal/
 
-    // 654 https://www.geeksforgeeks.org/construct-binary-tree-from-inorder-traversal/
+    // 402. Remove K Digits
+    public string RemoveKdigits(string num, int k){
+                if(num.Length == 0)
+                {
+                    return "";
+                }
 
+                return "";
+            }
 
-  }
+        // 1038
+        private static int sum = 0;
+        public static Node BstToGst(Node root)
+        {
+            RightNodeLeft(root);
+            return root;
+        }
+        
+        private static void RightNodeLeft(Node root)
+        {
+
+            if (root == null) return;
+            RightNodeLeft(root.right);
+            sum = sum + root.data;
+            root.data = sum;
+            RightNodeLeft(root.left);
+        }
+    }
 }
+
